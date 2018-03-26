@@ -1,0 +1,32 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# USB network device
+allow-hotplug enp0s20u1
+iface enp0s20u1 inet dhcp
+
+# Ethernet port #3 on the box, connected to the comcast modem
+auto enp5s0
+iface enp5s0 inet dhcp
+iface enp5s0 inet6 auto
+
+# The main LAN bridge, bridging enp1s0 enp3s0
+auto br0
+iface br0 inet static
+    address 10.5.0.1
+    netmask 255.255.255.0
+    gateway 10.5.0.1
+    bridge_ports enp1s0 enp3s0
+    up /usr/sbin/brctl stp br0 on
+
+# A VLAN on enp2s0, the first VLAN as I begin migrating to those
+auto enp2s0.100
+iface enp2s0.100 inet static
+    address 10.5.1.1
+    netmask 255.255.255.0
