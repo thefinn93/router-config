@@ -1,0 +1,4 @@
+#!/bin/sh
+set -ex
+env | logger -t $0
+/opt/port-forward.py /etc/port-forwards.json | /sbin/iptables-restore

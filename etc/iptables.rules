@@ -1,0 +1,6 @@
+*filter
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i enp5s0 -j DROP
+-A FORWARD -i enp5s0 -p udp -m udp --dport 34197 -m state --state NEW -j ACCEPT
+COMMIT
